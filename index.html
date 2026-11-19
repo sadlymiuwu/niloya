@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="tr">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<meta name="theme-color" content="#f7f2ff">
+<meta name="description" content="Niloya — cilt bakımı, regl, ilaç ve günlük aktivite takibi.">
+<link rel="manifest" href="manifest.webmanifest">
+<link rel="icon" href="icon.svg" type="image/svg+xml">
+<title>Niloya ♡</title>
+<style>
+:root{--bg:#f7f2ff;--card:rgba(255,255,255,.78);--ink:#55496c;--muted:#8e83a5;--pink:#f6c9ed;--pink2:#fff0fb;--lilac:#ded0ff;--mint:#c9f4ed;--yellow:#ffe9a9;--line:rgba(255,255,255,.9);--accent:#a88ce8;--shadow:0 12px 30px rgba(139,112,190,.13)}
+*{box-sizing:border-box}body{margin:0;background:radial-gradient(circle at 12% 5%,#fff 0,transparent 28%),radial-gradient(circle at 95% 18%,#f5dfff 0,transparent 27%),linear-gradient(145deg,#f6f0ff,#eaf9f7 62%,#fff5fb);color:var(--ink);font:15px/1.45 -apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif}
+button,input,select,textarea{font:inherit;color:inherit}button{cursor:pointer;border:0}
+.app{max-width:760px;margin:auto;padding:env(safe-area-inset-top) 16px calc(28px + env(safe-area-inset-bottom))}
+header{padding:26px 4px 16px;display:flex;align-items:center;justify-content:space-between;gap:12px}
+.brand{font-size:29px;font-weight:900;letter-spacing:-1.2px;color:#8d70c5;text-shadow:0 2px 0 #fff}.brand span{color:#e9a9df}
+.sub{color:var(--muted);font-size:13px}.date{font-size:12px;background:rgba(255,255,255,.8);border:1px solid white;padding:8px 12px;border-radius:99px;box-shadow:0 4px 12px #a98ed51c}
+.hero{background:linear-gradient(125deg,rgba(255,255,255,.9),rgba(238,221,255,.88) 52%,rgba(207,246,239,.9));border:1px solid white;border-radius:30px;padding:23px;box-shadow:0 14px 32px rgba(148,119,193,.16);position:relative;overflow:hidden}
+.hero:after{content:"✦  ○  ✧";position:absolute;right:16px;top:13px;font-size:23px;letter-spacing:7px;color:#c4a8ed}
+.hero h1{font-size:24px;margin:0 0 5px}.hero p{margin:0;color:#82749b;font-size:13px}
+.quick{display:grid;grid-template-columns:repeat(4,1fr);gap:9px;margin:15px 0 18px}
+.tile{background:linear-gradient(145deg,#fff,rgba(255,255,255,.65));border:1px solid white;border-radius:22px;padding:13px 7px;text-align:center;box-shadow:0 8px 18px rgba(145,119,185,.12),inset 0 1px 0 white;min-height:82px}
+.tile b{display:block;font-size:22px;margin-bottom:4px;color:#a58adf;text-shadow:0 2px 0 white}.tile span{font-size:11px;color:var(--muted)}
+nav{display:flex;gap:7px;overflow:auto;padding:4px 0 13px;scrollbar-width:none}
+nav button{white-space:nowrap;padding:10px 14px;border-radius:99px;background:rgba(255,255,255,.72);border:1px solid white;font-size:12px;color:var(--muted);box-shadow:0 4px 10px #9e8cc01a}
+nav button.active{background:linear-gradient(135deg,#e7d8ff,#d5f5ef);color:#665484;border-color:white;font-weight:800;box-shadow:0 6px 15px #a78bd52c}
+.panel{display:none}.panel.active{display:block}
+.card{background:var(--card);backdrop-filter:blur(12px);border:1px solid white;border-radius:25px;padding:18px;margin:0 0 14px;box-shadow:var(--shadow),inset 0 1px 0 white}
+.card h2{font-size:17px;margin:0 0 5px}.hint{font-size:12px;color:var(--muted);margin:0 0 13px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.item{display:flex;align-items:center;gap:10px;padding:11px 0;border-top:1px solid rgba(190,174,220,.22)}
+.item:first-of-type{border-top:0}.dot{width:38px;height:38px;border-radius:15px;display:grid;place-items:center;background:linear-gradient(145deg,#fff,#e9dcff);box-shadow:inset 0 2px 4px white,0 5px 10px #9f88c21a;font-size:17px;flex:none}
+.check{width:23px;height:23px;accent-color:#a78be0}
+.btn{background:linear-gradient(135deg,#d9c7ff,#c9f2eb);color:#62517f;border-radius:16px;padding:11px 16px;font-weight:800;font-size:12px;box-shadow:0 6px 13px #a28ac42a,inset 0 1px 0 white}
+.btn.secondary{background:linear-gradient(135deg,#fff,#f4eaff);color:#806d9e}.btn.mint{background:linear-gradient(135deg,#d8f6ed,#bcebe1);color:#547b76}
+.btn.danger{background:linear-gradient(135deg,#ffe4f0,#f7d5e4);color:#a45d7c}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+label{display:block;font-size:12px;font-weight:700;margin:10px 0 5px;color:#796b91}
+input,select,textarea{width:100%;border:1px solid rgba(196,180,222,.5);border-radius:14px;background:rgba(255,255,255,.82);padding:11px;outline:none;box-shadow:inset 0 2px 5px rgba(145,119,185,.05)}
+input:focus,select:focus,textarea:focus{border-color:#bba5ec;box-shadow:0 0 0 3px #e9ddff}
+form .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+form button{margin-top:12px}
+.tag{font-size:10px;padding:5px 9px;border-radius:99px;background:linear-gradient(135deg,#f3eaff,#e0f8f2);color:#826eaa;border:1px solid white}
+.empty{color:var(--muted);font-size:13px;padding:14px 0}
+.progress{height:9px;border-radius:99px;background:#eee6fa;overflow:hidden;margin:10px 0}.progress i{display:block;height:100%;background:linear-gradient(90deg,#d5baff,#b9eee4);border-radius:99px}
+footer{text-align:center;color:#a69ab9;font-size:11px;padding:12px}
+.smallprint{font-size:11px;color:var(--muted);line-height:1.5}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#76649a;color:white;padding:11px 17px;border-radius:99px;font-size:12px;opacity:0;pointer-events:none;transition:.2s;z-index:9;box-shadow:0 8px 20px #78659a44}
+#toast.show{opacity:1}
+@media(max-width:420px){.quick{grid-template-columns:repeat(4,1fr);gap:6px}.tile{padding:10px 3px}.tile span{font-size:10px}.brand{font-size:25px}.hero h1{font-size:21px}}
+
+/* refined bubble system */
+:root{--ink:#514765;--muted:#8b829c;--accent:#9b83d2;--shadow:0 10px 28px rgba(91,74,126,.085)}
+body{font-family:Inter,-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;letter-spacing:-.12px}
+.app{max-width:720px;padding-left:18px;padding-right:18px}
+header{padding-top:30px;padding-bottom:19px}
+.brand{font-size:30px;letter-spacing:-1.35px;color:#7661a7;text-shadow:none}
+.brand span{color:#d69dce}
+.date{color:#74688c;font-weight:650;background:rgba(255,255,255,.72);box-shadow:0 3px 12px rgba(91,74,126,.06)}
+.hero{padding:25px 24px;border-radius:27px;background:linear-gradient(112deg,rgba(255,255,255,.94),rgba(239,231,255,.88) 56%,rgba(222,247,241,.9));box-shadow:0 12px 28px rgba(91,74,126,.09)}
+.hero:after{content:"✧  ◦  ✦";font-size:19px;letter-spacing:6px;color:#b5a1dc}
+.hero h1{font-size:22px;letter-spacing:-.65px;font-weight:760}
+.hero p{font-size:13px;color:#827892}
+.quick{gap:10px;margin:16px 0 19px}
+.tile{border-radius:19px;min-height:78px;padding:12px 6px;background:rgba(255,255,255,.72);box-shadow:0 5px 16px rgba(91,74,126,.055),inset 0 1px 0 white;transition:transform .18s,box-shadow .18s}
+.tile:active,.btn:active{transform:scale(.975)}
+.tile b{font-size:20px;color:#9982ca;text-shadow:none}
+.tile span{font-size:11px;font-weight:600}
+nav{gap:8px;padding-bottom:15px}
+nav button{padding:10px 14px;background:rgba(255,255,255,.62);box-shadow:none;border-color:rgba(255,255,255,.9);font-weight:600}
+nav button.active{background:linear-gradient(120deg,#e9e0fb,#e0f4ef);box-shadow:0 4px 12px rgba(91,74,126,.08);color:#62547f}
+.card{border-radius:22px;padding:19px;background:rgba(255,255,255,.76);box-shadow:0 8px 22px rgba(91,74,126,.065),inset 0 1px 0 white}
+.card h2{font-size:16px;letter-spacing:-.25px;font-weight:760}
+.hint{font-size:12px;line-height:1.55;color:#8b829c}
+.item{padding:12px 0}
+.dot{width:37px;height:37px;border-radius:13px;background:linear-gradient(145deg,#fff,#f0eaff);box-shadow:inset 0 1px 2px white,0 3px 8px rgba(91,74,126,.06)}
+.btn{border-radius:13px;padding:11px 15px;font-size:12px;box-shadow:0 4px 10px rgba(91,74,126,.08);transition:transform .15s}
+input,select,textarea{border-radius:12px;background:rgba(255,255,255,.9);border-color:#e7e0f0;padding:12px;font-size:14px}
+label{font-size:11px;letter-spacing:.15px;text-transform:uppercase;color:#877a9b}
+.tag{font-weight:700;letter-spacing:.1px}
+footer{padding:18px 8px 8px}
+@media(max-width:420px){.app{padding-left:14px;padding-right:14px}.hero{padding:22px 19px}.card{padding:16px}.brand{font-size:27px}}
+
+</style>
+</head>
+<body>
+<div class="app">
+<header><div><div class="brand">Niloya <span>♡</span></div><div class="sub">your little bubble universe ✦</div></div><div class="date" id="today"></div></header>
+<section class="hero"><h1>Merhaba! Bubble günlüğüne hoş geldin 🫧</h1><p>Kendine ayırdığın küçük zamanları takip et.</p></section>
+<div class="quick">
+<button class="tile" data-go="skin"><b>♡</b><span>Skincare</span></button>
+<button class="tile" data-go="period"><b>✿</b><span>Regl</span></button>
+<button class="tile" data-go="meds"><b>＋</b><span>İlaçlar</span></button>
+<button class="tile" data-go="daily"><b>☼</b><span>Günlük</span></button>
+</div>
+<nav>
+<button class="active" data-tab="home">Bugün</button><button data-tab="skin">Cilt bakımı</button><button data-tab="period">Regl günlüğü</button><button data-tab="meds">İlaçlar</button><button data-tab="daily">Aktivite & ruh hali</button><button data-tab="agenda">Ajanda</button><button data-tab="history">Kayıtlar</button>
+</nav>
+<section id="home" class="panel active">
+<div class="card"><div class="row"><h2>Bugünün mini hedefleri</h2><span class="tag" id="doneCount">0 / 0</span></div><p class="hint">Tamamladıklarını işaretle; küçük adımlar da ilerlemedir.</p><div id="todayTasks"></div></div>
+<div class="card"><h2>Bugün kendine nasıl bakıyorsun?</h2><p class="hint">Cilt bakımını, ilaçlarını ve ruh halini ayrı sekmelerden kaydedebilirsin.</p><div class="row"><span>🌸 Yavaş ve düzenli ilerle.</span><span class="tag">you got this</span></div></div>
+<div class="card"><h2>Hızlı not</h2><textarea id="quickNote" rows="3" placeholder="Bugün aklında kalan bir şey..."></textarea><div class="actions"><button class="btn" id="saveNote">Notu kaydet</button></div></div>
+</section>
+<section id="skin" class="panel">
+<div class="card"><h2>♡ Cilt bakım rutini</h2><p class="hint">Başlangıç planı — cildinin tepkisine göre düzenle. Retinolü haftada 1 geceyle başlat; iyi tolere edersen artır. Tahrişte aktiflere ara ver.</p>
+<div class="row"><strong>Sabah</strong><span class="tag">her gün</span></div>
+<div class="item"><div class="dot">🫧</div><div style="flex:1"><strong>ISANA Pure Waschcreme</strong><small>Temizleyici</small></div><input class="check skincheck" type="checkbox" data-task="Sabah temizleyici"></div>
+<div class="item"><div class="dot">🧴</div><div style="flex:1"><strong>Güneş koruması</strong><small>SPF 30–50+, cildine uygun bir ürün</small></div><input class="check skincheck" type="checkbox" data-task="Güneş koruması"></div>
+<div class="item"><div class="dot">🌷</div><div style="flex:1"><strong>ISANA Pure 24H Creme</strong><small>Nemlendirici</small></div><input class="check skincheck" type="checkbox" data-task="Sabah nemlendirici"></div>
+<div class="row" style="margin-top:16px"><strong>Akşam — haftalık plan</strong><span class="tag">düzenlenebilir</span></div>
+<div id="skinWeek"></div>
+<p class="smallprint">Niacinamide %10: başlangıçta haftada 2–3 akşam, tolere edersen artır. Retinol ile aynı akşam kullanmak zorunda değilsin. Retinoidler hamilelikte kullanılmamalıdır. Güneş koruması, özellikle retinol kullanırken önemlidir.</p>
+<div class="actions"><button class="btn secondary" id="resetSkin">Bu haftanın işaretlerini sıfırla</button></div>
+</div>
+<div class="card"><h2>Ürünlerim</h2><p class="hint">Mevcut rutinine eklenen ürünleri burada görebilirsin.</p><div class="item"><div class="dot">🫧</div><div><strong>ISANA Pure Waschcreme</strong><small>Temizleyici</small></div></div><div class="item"><div class="dot">💧</div><div><strong>ISANA Niacinamide %10</strong><small>Serum</small></div></div><div class="item"><div class="dot">🌙</div><div><strong>ISANA Bakuchiol + Retinol</strong><small>Serum — ürün etiketindeki talimatlara uy</small></div></div><div class="item"><div class="dot">🧴</div><div><strong>ISANA Pure 24H Creme</strong><small>Nemlendirici</small></div></div></div>
+</section>
+<section id="period" class="panel">
+<div class="card"><h2>✿ Regl günlüğü</h2><p class="hint">Başlangıç ve bitiş tarihini, belirtileri ve notlarını kaydet.</p>
+<form id="periodForm"><div class="grid"><div><label>Başlangıç tarihi</label><input required type="date" id="periodStart"></div><div><label>Bitiş tarihi (isteğe bağlı)</label><input type="date" id="periodEnd"></div></div>
+<label>Belirtiler</label><div class="grid"><label><input type="checkbox" name="symptom" value="Kramp / ağrı"> Kramp / ağrı</label><label><input type="checkbox" name="symptom" value="Baş ağrısı"> Baş ağrısı</label><label><input type="checkbox" name="symptom" value="Şişkinlik"> Şişkinlik</label><label><input type="checkbox" name="symptom" value="Hassasiyet"> Hassasiyet</label><label><input type="checkbox" name="symptom" value="Yorgunluk"> Yorgunluk</label><label><input type="checkbox" name="symptom" value="Ruh hali değişimi"> Ruh hali değişimi</label></div>
+<label>Not</label><textarea id="periodNote" rows="2" placeholder="Akış, ağrı seviyesi veya başka not..."></textarea><button class="btn" type="submit">Regl kaydını ekle</button></form></div>
+<div class="card"><h2>Geçmiş regl kayıtları</h2><div id="periodList" class="empty">Henüz kayıt yok.</div></div>
+</section>
+<section id="meds" class="panel">
+<div class="card"><h2>＋ İlaç takibim</h2><p class="hint">Kullandığın ilaçları ve kendi notlarını kaydet. Bu bölüm doz veya tedavi önermez; doktorunun/eczacının talimatını esas al.</p>
+<form id="medForm"><label>İlaç adı</label><input required id="medName" placeholder="İlaç adı"><div class="grid"><div><label>Doz (etikette yazdığı gibi)</label><input id="medDose" placeholder="Örn. 1 tablet"></div><div><label>Kullanım notu</label><input id="medWhen" placeholder="Doktorun önerdiği şekilde"></div></div><div class="grid"><div><label>Başlangıç</label><input type="date" id="medStart"></div><div><label>Bitiş (isteğe bağlı)</label><input type="date" id="medEnd"></div></div><label>Ek not</label><textarea id="medNote" rows="2" placeholder="Yan etki / hatırlatma / reçete notu"></textarea><button class="btn" type="submit">İlacı kaydet</button></form></div>
+<div class="card"><h2>Kayıtlı ilaçlar</h2><div id="medList" class="empty">Henüz ilaç eklemedin.</div></div>
+</section>
+<section id="daily" class="panel">
+<div class="card"><h2>☼ Günlük check-in</h2><p class="hint">Bugün nasıl hissediyorsun?</p><form id="dailyForm"><label>Ruh hali</label><select id="mood"><option>😊 İyi</option><option>😌 Sakin</option><option>🥰 Mutlu</option><option>😐 Normal</option><option>😔 Düşük</option><option>😣 Stresli</option></select><div class="grid"><div><label>Uyku (saat)</label><input id="sleep" type="number" min="0" max="24" step=".5" placeholder="7.5"></div><div><label>Su (bardak)</label><input id="water" type="number" min="0" max="50" placeholder="6"></div></div><label>Hareket / aktivite</label><input id="activity" placeholder="Örn. 20 dk yürüyüş"><label>Bugünün notu</label><textarea id="dailyNote" rows="2" placeholder="Kendin için küçük bir not..."></textarea><button class="btn" type="submit">Günü kaydet</button></form></div>
+<div class="card"><h2>Son check-in</h2><div id="dailyLatest" class="empty">Henüz günlük kayıt yok.</div></div>
+</section>
+
+<section id="agenda" class="panel">
+<div class="card"><div class="row"><h2>Ajandam</h2><span class="tag" id="agendaCount">0 görev</span></div><p class="hint">Planlarını tek yerde topla. Tamamladıkça işaretle.</p>
+<form id="agendaForm"><label>Görev</label><input id="agendaTitle" required maxlength="90" placeholder="Örn. proje raporunu tamamla">
+<div class="grid"><div><label>Tarih</label><input id="agendaDate" type="date" required></div><div><label>Saat</label><input id="agendaTime" type="time"></div></div>
+<div class="grid"><div><label>Kategori</label><select id="agendaCategory"><option>Genel</option><option>Üniversite</option><option>İş</option><option>Sağlık</option><option>Kişisel</option><option>Özel gün</option></select></div><div><label>Hatırlatma</label><select id="agendaReminder"><option value="0">Yok</option><option value="5">5 dk önce</option><option value="15">15 dk önce</option><option value="30">30 dk önce</option><option value="60">1 saat önce</option></select></div></div>
+<label>Not (isteğe bağlı)</label><textarea id="agendaNote" rows="2" placeholder="Detay ekle..."></textarea><button class="btn" type="submit">Ajandaya ekle</button></form></div>
+<div class="card"><div class="row"><h2>Yaklaşan planlar</h2><span class="tag">tarihe göre</span></div><div id="agendaList" class="empty">Henüz plan eklemedin.</div></div>
+<div class="card"><p class="smallprint">Hatırlatmalar yalnızca uygulama açıkken kontrol edilir. Tarayıcı bildirim izni gerektirir; uygulama kapalıyken veya işletim sistemi bildirimleri kısıtladığında bildirim garantisi yoktur.</p><div class="actions"><button class="btn secondary" id="enableNotifications" type="button">Bildirim iznini aç</button></div></div>
+</section>
+
+<section id="history" class="panel">
+<div class="card"><h2>♡ Kayıt geçmişim</h2><p class="hint">Bu cihazda saklanan son kayıtların.</p><div id="historyList" class="empty">Henüz kayıt yok.</div><div class="actions"><button class="btn secondary" id="exportData">Verilerimi dışa aktar</button><button class="btn danger" id="deleteData">Tüm verileri sil</button></div></div>
+<div class="card"><h2>Gizlilik notu</h2><p class="smallprint">Kayıtların bu tarayıcının yerel depolamasında tutulur. Bir hesaba gönderilmez ve cihazlar arasında otomatik eşitlenmez. Tarayıcı verilerini silersen kayıtların kaybolabilir. Hassas sağlık bilgilerini yalnızca güvendiğin cihazda sakla.</p></div>
+</section>
+<footer>made with ♡ in your bubble · Niloya</footer>
+</div><div id="toast"></div>
+<script>
+const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
+const today=new Date(); const iso=d=>{let x=new Date(d);return new Date(x.getTime()-x.getTimezoneOffset()*60000).toISOString().slice(0,10)};
+const pretty=s=>s?new Date(s+'T12:00:00').toLocaleDateString('tr-TR',{day:'numeric',month:'short',year:'numeric'}):'—';
+$('#today').textContent=today.toLocaleDateString('tr-TR',{day:'numeric',month:'short'});
+const KEY='niloyaActivityV1'; let data=JSON.parse(localStorage.getItem(KEY)||'{"periods":[],"meds":[],"daily":[],"notes":[],"checks":{},"agenda":[]}');
+data.agenda=data.agenda||[]; function save(){localStorage.setItem(KEY,JSON.stringify(data));}
+function toast(t){let e=$('#toast');e.textContent=t;e.classList.add('show');setTimeout(()=>e.classList.remove('show'),1800)}
+function tab(name){$$('nav button').forEach(b=>b.classList.toggle('active',b.dataset.tab===name));$$('.panel').forEach(p=>p.classList.toggle('active',p.id===name)); if(name==='home')renderHome(); if(name==='period')renderPeriods();if(name==='meds')renderMeds();if(name==='history')renderHistory();if(name==='daily')renderDaily();if(name==='agenda')renderAgenda();}
+$$('nav button').forEach(b=>b.onclick=()=>tab(b.dataset.tab));$$('[data-go]').forEach(b=>b.onclick=()=>tab(b.dataset.go));
+const week=[['Pazartesi','Niacinamide'],['Salı','Nemlendirici'],['Çarşamba','Retinol'],['Perşembe','Nemlendirici'],['Cuma','Niacinamide'],['Cumartesi','Nemlendirici'],['Pazar','Niacinamide']];
+function renderWeek(){let day=(today.getDay()+6)%7;$('#skinWeek').innerHTML=week.map(([d,a],i)=>`<div class="item"><div class="dot">${a==='Retinol'?'🌙':a==='Niacinamide'?'💧':'🤍'}</div><div style="flex:1"><strong>${d}</strong><small>${a}</small></div><input class="check skincheck" type="checkbox" data-task="${d} ${a}" ${data.checks[iso(today)+'_'+d]?'checked':''}></div>`).join('');$$('.skincheck').forEach(c=>c.onchange=()=>{data.checks[iso(today)+'_'+c.dataset.task]=c.checked;save();renderHome();});}
+function renderHome(){let tasks=[['Sabah temizleyici','🫧'],['Güneş koruması','☀️'],['Sabah nemlendirici','🧴'],[week[(today.getDay()+6)%7][0]+' '+week[(today.getDay()+6)%7][1],'🌙']];let done=0;$('#todayTasks').innerHTML=tasks.map(([t,ic])=>{let k=iso(today)+'_'+t,checked=!!data.checks[k];if(checked)done++;return `<div class="item"><div class="dot">${ic}</div><div style="flex:1"><strong>${t}</strong></div><input class="check" type="checkbox" data-k="${k}" ${checked?'checked':''}></div>`}).join('');$('#doneCount').textContent=done+' / '+tasks.length;$$('#todayTasks input').forEach(c=>c.onchange=()=>{data.checks[c.dataset.k]=c.checked;save();renderHome();});}
+function renderPeriods(){$('#periodList').innerHTML=data.periods.length?data.periods.slice().reverse().map((p,i)=>`<div class="item"><div class="dot">🌸</div><div style="flex:1"><strong>${pretty(p.start)}${p.end?' – '+pretty(p.end):' – devam ediyor'}</strong><small>${p.symptoms.join(', ')||'Belirti eklenmedi'} ${p.note?'· '+esc(p.note):''}</small></div><button class="btn danger" data-del-period="${data.periods.length-1-i}">Sil</button></div>`).join(''):'<div class="empty">Henüz kayıt yok.</div>';$$('[data-del-period]').forEach(b=>b.onclick=()=>{data.periods.splice(+b.dataset.delPeriod,1);save();renderPeriods();});}
+function renderMeds(){$('#medList').innerHTML=data.meds.length?data.meds.slice().reverse().map((m,i)=>`<div class="item"><div class="dot">💊</div><div style="flex:1"><strong>${esc(m.name)} ${m.dose?'· '+esc(m.dose):''}</strong><small>${esc(m.when||'')} ${m.start?'· '+pretty(m.start):''}${m.end?' – '+pretty(m.end):''}${m.note?' · '+esc(m.note):''}</small></div><button class="btn danger" data-del-med="${data.meds.length-1-i}">Sil</button></div>`).join(''):'<div class="empty">Henüz ilaç eklemedin.</div>';$$('[data-del-med]').forEach(b=>b.onclick=()=>{data.meds.splice(+b.dataset.delMed,1);save();renderMeds();});}
+function renderDaily(){let d=data.daily.at(-1);$('#dailyLatest').innerHTML=d?`<strong>${pretty(d.date)} · ${esc(d.mood)}</strong><p class="smallprint">Uyku: ${esc(d.sleep||'—')} saat · Su: ${esc(d.water||'—')} bardak<br>${esc(d.activity||'Aktivite yok')}<br>${esc(d.note||'')}</p>`:'Henüz günlük kayıt yok.'}
+function renderHistory(){let all=[...data.periods.map(x=>({date:x.start,type:'Regl kaydı'})),...data.meds.map(x=>({date:x.start,type:'İlaç: '+x.name})),...data.daily.map(x=>({date:x.date,type:'Günlük check-in'})),...data.agenda.map(x=>({date:x.date,type:'Ajanda: '+x.title}))].sort((a,b)=>(b.date||'').localeCompare(a.date||''));$('#historyList').innerHTML=all.length?all.map(x=>`<div class="item"><div class="dot">✧</div><div><strong>${esc(x.type)}</strong><small>${pretty(x.date)}</small></div></div>`).join(''):'Henüz kayıt yok.'}
+function esc(s){return String(s??'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));}
+$('#periodStart').value=iso(today);$('#medStart').value=iso(today);$('#agendaDate').value=iso(today);
+$('#periodForm').onsubmit=e=>{e.preventDefault();let start=$('#periodStart').value,end=$('#periodEnd').value;if(end&&end<start){toast('Bitiş tarihi başlangıçtan önce olamaz.');return}data.periods.push({start,end,symptoms:$$('[name=symptom]:checked').map(x=>x.value),note:$('#periodNote').value});save();e.target.reset();$('#periodStart').value=iso(today);renderPeriods();toast('Regl kaydın eklendi ♡');};
+$('#medForm').onsubmit=e=>{e.preventDefault();data.meds.push({name:$('#medName').value,dose:$('#medDose').value,when:$('#medWhen').value,start:$('#medStart').value,end:$('#medEnd').value,note:$('#medNote').value});save();e.target.reset();$('#medStart').value=iso(today);renderMeds();toast('İlaç kaydedildi ♡');};
+$('#dailyForm').onsubmit=e=>{e.preventDefault();data.daily.push({date:iso(today),mood:$('#mood').value,sleep:$('#sleep').value,water:$('#water').value,activity:$('#activity').value,note:$('#dailyNote').value});save();renderDaily();toast('Günün kaydedildi 🌷');};
+$('#saveNote').onclick=()=>{let v=$('#quickNote').value.trim();if(!v)return toast('Önce notunu yaz.');data.notes.push({date:iso(today),text:v});save();$('#quickNote').value='';toast('Notun kaydedildi ♡');};
+$('#resetSkin').onclick=()=>{if(confirm('Cilt bakım işaretlerini sıfırlamak istiyor musun?')){data.checks={};save();renderWeek();renderHome();toast('İşaretler sıfırlandı.');}};
+$('#exportData').onclick=()=>{let blob=new Blob([JSON.stringify(data,null,2)],{type:'application/json'}),a=document.createElement('a');a.href=URL.createObjectURL(blob);a.download='niloya-yedek.json';a.click();URL.revokeObjectURL(a.href);};
+$('#deleteData').onclick=()=>{if(confirm('Bu cihazdaki tüm Niloya kayıtlarını kalıcı olarak silmek istiyor musun?')){localStorage.removeItem(KEY);data={periods:[],meds:[],daily:[],notes:[],checks:{},agenda:[]};renderHome();renderPeriods();renderMeds();renderDaily();renderHistory();toast('Kayıtlar silindi.');}};
+
+function renderAgenda(){
+ const list=$('#agendaList'); if(!list)return;
+ const now=iso(today);
+ const sorted=data.agenda.slice().sort((a,b)=>(a.date+(a.time||'')).localeCompare(b.date+(b.time||'')));
+ $('#agendaCount').textContent=sorted.filter(x=>!x.done).length+' açık görev';
+ list.innerHTML=sorted.length?sorted.map(x=>`<div class="item"><input class="check" type="checkbox" data-agenda-done="${x.id}" ${x.done?'checked':''}><div class="dot">${x.category==='Üniversite'?'📚':x.category==='Sağlık'?'♡':x.category==='İş'?'✦':'◦'}</div><div style="flex:1;min-width:0"><strong style="${x.done?'text-decoration:line-through;opacity:.55':''}">${esc(x.title)}</strong><small>${pretty(x.date)}${x.time?' · '+esc(x.time):''} · ${esc(x.category)}${x.note?' · '+esc(x.note):''}</small></div><button class="btn danger" data-agenda-del="${x.id}" type="button">Sil</button></div>`).join(''):'<div class="empty">Henüz plan eklemedin.</div>';
+ $$('[data-agenda-done]').forEach(c=>c.onchange=()=>{let x=data.agenda.find(a=>a.id===c.dataset.agendaDone);if(x)x.done=c.checked;save();renderAgenda();});
+ $$('[data-agenda-del]').forEach(b=>b.onclick=()=>{data.agenda=data.agenda.filter(x=>x.id!==b.dataset.agendaDel);save();renderAgenda();});
+}
+$('#agendaForm').onsubmit=e=>{e.preventDefault();data.agenda.push({id:Date.now().toString(),title:$('#agendaTitle').value.trim(),date:$('#agendaDate').value,time:$('#agendaTime').value,category:$('#agendaCategory').value,reminder:+$('#agendaReminder').value,note:$('#agendaNote').value.trim(),done:false,notified:false});save();e.target.reset();$('#agendaDate').value=iso(today);renderAgenda();toast('Ajandana eklendi ✦');};
+$('#enableNotifications').onclick=async()=>{if(!('Notification'in window)){toast('Bu tarayıcı bildirimleri desteklemiyor.');return;}let p=await Notification.requestPermission();toast(p==='granted'?'Bildirim izni açıldı.':'Bildirim izni verilmedi.');};
+function checkAgendaReminders(){
+ if(!('Notification'in window)||Notification.permission!=='granted')return;
+ const now=new Date();
+ data.agenda.forEach(x=>{if(x.done||x.notified||!x.time||!x.reminder)return;let target=new Date(x.date+'T'+x.time);let diff=(target-now)/60000;if(diff<=x.reminder&&diff>0){new Notification('Niloya · Yaklaşan plan',{body:x.title+' · '+x.time});x.notified=true;save();}});
+}
+
+renderWeek();renderHome();renderPeriods();renderMeds();renderDaily();renderAgenda();renderHistory();setInterval(checkAgendaReminders,30000);
+if('serviceWorker' in navigator && location.protocol.startsWith('http')) navigator.serviceWorker.register('./sw.js').catch(()=>{});
+</script>
+</body></html>
