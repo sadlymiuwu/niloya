@@ -4,13 +4,19 @@
   "description": "Kişisel bakım, ajanda, regl, ilaç ve günlük aktivite takibi.",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f7f2ff",
-  "theme_color": "#e9ddff",
+  "background_color": "#f6f4fa",
+  "theme_color": "#eee7fa",
   "icons": [
     {
-      "src": "icon.svg",
-      "sizes": "any",
-      "type": "image/svg+xml",
+      "src": "bibble-icon-hd.png",
+      "sizes": "1024x1024",
+      "type": "image/png",
+      "purpose": "any maskable"
+    },
+    {
+      "src": "bibble-icon.png",
+      "sizes": "512x512",
+      "type": "image/png",
       "purpose": "any maskable"
     }
   ]
