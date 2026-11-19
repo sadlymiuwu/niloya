@@ -1,23 +1,24 @@
 {
-  "name": "Niloya",
+  "name": "Niloya — Kişisel Alanın",
   "short_name": "Niloya",
   "description": "Kişisel bakım, ajanda, regl, ilaç ve günlük aktivite takibi.",
   "start_url": "./",
   "display": "standalone",
-  "background_color": "#f6f4fa",
-  "theme_color": "#eee7fa",
+  "background_color": "#f6f5fa",
+  "theme_color": "#8b72be",
   "icons": [
     {
       "src": "bibble-icon-hd.png",
       "sizes": "1024x1024",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     },
     {
       "src": "bibble-icon.png",
       "sizes": "512x512",
       "type": "image/png",
-      "purpose": "any maskable"
+      "purpose": "any"
     }
-  ]
+  ],
+  "orientation": "portrait"
 }
