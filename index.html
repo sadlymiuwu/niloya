@@ -82,17 +82,85 @@ label{font-size:11px;letter-spacing:.15px;text-transform:uppercase;color:#877a9b
 footer{padding:18px 8px 8px}
 @media(max-width:420px){.app{padding-left:14px;padding-right:14px}.hero{padding:22px 19px}.card{padding:16px}.brand{font-size:27px}}
 
+
+/* NILoya — quiet luxury bubble redesign */
+:root{--ink:#40364f;--muted:#8c8498;--accent:#8d78bc;--line:#eee9f4;--shadow:0 14px 34px rgba(70,55,96,.065)}
+*{box-sizing:border-box}
+body{margin:0;color:var(--ink);font-family:Inter,"Avenir Next",-apple-system,BlinkMacSystemFont,"Segoe UI",sans-serif;background:#f8f7fb;letter-spacing:-.15px}
+body:before{content:"";position:fixed;inset:0;pointer-events:none;background:radial-gradient(ellipse at 86% 8%,rgba(213,244,236,.58),transparent 30%),radial-gradient(ellipse at 4% 30%,rgba(231,220,250,.52),transparent 34%);z-index:-1}
+.app{max-width:980px;margin:0 auto;padding:26px 28px 50px}
+header{padding:0 2px 25px;display:flex;align-items:center;justify-content:space-between}
+.brand-wrap{display:flex;flex-direction:column;gap:2px}
+.brand{font-size:34px;font-weight:850;letter-spacing:-2px;color:#57476f;line-height:1}
+.brand-orb{display:inline-grid;place-items:center;margin-left:7px;width:20px;height:20px;border-radius:50%;font-size:12px;color:#8d78bc;background:linear-gradient(145deg,#fff,#dff4ef);box-shadow:0 2px 8px #a69ac52b;vertical-align:middle}
+.sub{font-size:12px;letter-spacing:.25px;color:#9991a5}
+.date{display:flex;flex-direction:column;align-items:flex-end;gap:2px;padding:9px 15px;border:1px solid #eeeaf4;background:rgba(255,255,255,.72);border-radius:14px;box-shadow:0 4px 14px rgba(70,55,96,.035)}
+.date-label,.eyebrow,.section-kicker{font-size:9px;font-weight:800;letter-spacing:1.5px;color:#a39aaf}
+.date strong{font-size:13px;color:#625575}
+.hero{min-height:210px;display:flex;align-items:center;justify-content:space-between;position:relative;overflow:hidden;padding:31px 38px;border:1px solid #fff;border-radius:25px;background:linear-gradient(108deg,#fff 0%,#f1edfa 57%,#e9f7f3 100%);box-shadow:0 12px 32px rgba(70,55,96,.055)}
+.hero-copy{position:relative;z-index:1}
+.hero h1{margin:12px 0 9px;font-size:clamp(25px,4vw,37px);line-height:1.12;letter-spacing:-1.5px;font-weight:760;color:#4c405f}
+.hero h1 em{font-style:normal;color:#927bbd}
+.hero p{margin:0;color:#8d8499;font-size:13px}
+.hero-art{position:absolute;right:7%;top:50%;transform:translateY(-50%);width:190px;height:165px}
+.orb{position:absolute;display:block;border:1px solid rgba(255,255,255,.95);border-radius:50%;background:radial-gradient(circle at 32% 25%,rgba(255,255,255,.98),rgba(222,213,246,.52) 42%,rgba(196,239,229,.26) 72%,rgba(255,255,255,.1));box-shadow:inset -8px -10px 22px rgba(171,151,207,.12),0 8px 24px rgba(142,124,180,.08)}
+.orb:after{content:"";position:absolute;top:17%;left:21%;width:27%;height:12%;border-radius:50%;background:rgba(255,255,255,.8);filter:blur(3px);transform:rotate(-35deg)}
+.orb-a{width:118px;height:118px;right:25px;top:23px}
+.orb-b{width:58px;height:58px;right:0;top:0;background:radial-gradient(circle at 30% 25%,#fff,rgba(228,207,247,.56),rgba(255,255,255,.2))}
+.orb-c{width:38px;height:38px;left:12px;bottom:10px}
+.orb-star{position:absolute;right:12px;bottom:6px;color:#b19bcf;font-size:23px}
+.section-kicker{display:flex;align-items:center;gap:13px;margin:25px 2px 11px}
+.kicker-line{height:1px;background:#e9e4ef;flex:1}
+.quick{display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:12px;margin:0 0 27px}
+.tile{position:relative;display:flex;align-items:center;gap:12px;text-align:left;min-height:72px;padding:13px 15px;border:1px solid #fff;border-radius:17px;background:rgba(255,255,255,.78);box-shadow:0 6px 20px rgba(70,55,96,.045);transition:.18s}
+.tile:hover{transform:translateY(-2px);box-shadow:0 10px 24px rgba(70,55,96,.08)}
+.tile-icon{display:grid;place-items:center;flex:none;width:38px;height:38px;border-radius:13px;background:linear-gradient(145deg,#f4effb,#e8f6f2);color:#8c77b7;font-size:19px}
+.tile>span:nth-child(2){font-size:12px;font-weight:700;color:#625873}
+.tile b{margin-left:auto;align-self:flex-start;font-size:9px;color:#b8afc3;font-weight:700}
+nav{display:flex;gap:5px;overflow:auto;padding:5px 0 14px;margin-bottom:3px;scrollbar-width:none;border-bottom:1px solid #ebe7f0}
+nav button{white-space:nowrap;padding:9px 13px;border-radius:9px;background:transparent;border:0;font-size:12px;font-weight:650;color:#938a9f;box-shadow:none}
+nav button.active{background:#eee9f7;color:#65547f}
+.panel{display:none}.panel.active{display:block}
+.card{background:rgba(255,255,255,.88);border:1px solid #fff;border-radius:18px;padding:21px 23px;margin:0 0 13px;box-shadow:var(--shadow);backdrop-filter:blur(8px)}
+.card h2{font-size:16px;letter-spacing:-.35px;font-weight:760;margin:0 0 5px;color:#50445f}
+.hint{font-size:12px;line-height:1.6;color:#938a9d;margin:0 0 13px}
+.row{display:flex;align-items:center;justify-content:space-between;gap:10px}
+.item{display:flex;align-items:center;gap:12px;padding:13px 0;border-top:1px solid #f0edf4}
+.item:first-of-type{border-top:0}
+.item>div[style*="flex:1"],.item>div[style*="flex: 1"]{min-width:0}
+.item strong{display:block;font-size:13px;font-weight:700;color:#554a64;line-height:1.4}
+.item small{display:block;font-size:11px;line-height:1.5;color:#9890a2;margin-top:3px;overflow-wrap:anywhere}
+.dot{width:37px;height:37px;border-radius:12px;display:grid;place-items:center;flex:none;background:linear-gradient(145deg,#f6f2fb,#eaf6f2);box-shadow:none;font-size:16px}
+.check{width:19px;height:19px;accent-color:#927cbb;flex:none}
+.btn{background:#8875b1;color:#fff;border-radius:11px;padding:10px 14px;font-weight:700;font-size:11px;box-shadow:none}
+.btn.secondary{background:#f0edf6;color:#716283}.btn.mint{background:#e7f4ef;color:#557c70}.btn.danger{background:#f8edf1;color:#a16e83}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:10px}
+label{display:block;font-size:10px;font-weight:800;letter-spacing:.7px;margin:12px 0 6px;color:#887e94;text-transform:uppercase}
+input,select,textarea{width:100%;border:1px solid #e9e4ef;border-radius:10px;background:#fff;padding:11px 12px;outline:none;box-shadow:none;font-size:13px}
+input:focus,select:focus,textarea:focus{border-color:#b6a5d1;box-shadow:0 0 0 3px #f0ebf7}
+form .grid{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+form button{margin-top:12px}
+.tag{font-size:10px;padding:5px 9px;border-radius:8px;background:#f1edf7;color:#85749f;border:0;font-weight:700}
+.empty{color:#9b92a5;font-size:12px;padding:14px 0}
+.progress{height:6px;border-radius:20px;background:#eeeaf3;overflow:hidden;margin:10px 0}.progress i{display:block;height:100%;background:linear-gradient(90deg,#b8a5dc,#b6e3d8);border-radius:20px}
+footer{text-align:center;color:#b1a9ba;font-size:10px;padding:17px}
+.smallprint{font-size:11px;color:#9990a2;line-height:1.6}
+#toast{position:fixed;bottom:20px;left:50%;transform:translateX(-50%);background:#55486b;color:white;padding:11px 17px;border-radius:11px;font-size:12px;opacity:0;pointer-events:none;transition:.2s;z-index:9;box-shadow:0 8px 20px #78659a22}
+#toast.show{opacity:1}
+@media(max-width:650px){.app{padding:19px 15px 36px}.brand{font-size:30px}.hero{min-height:190px;padding:25px 23px}.hero-art{right:-37px;opacity:.65;transform:translateY(-50%) scale(.8)}.hero-copy{max-width:75%}.hero h1{font-size:27px}.quick{grid-template-columns:repeat(2,minmax(0,1fr));gap:9px;margin-bottom:22px}.tile{min-height:65px;padding:10px}.tile-icon{width:34px;height:34px}.card{padding:17px 16px}nav{gap:2px}nav button{padding:9px 10px;font-size:11px}}
+@media(max-width:380px){.hero-copy{max-width:85%}.hero-art{opacity:.35}.hero h1{font-size:24px}.date{padding:8px 10px}}
+
 </style>
 </head>
 <body>
 <div class="app">
-<header><div><div class="brand">Niloya <span>♡</span></div><div class="sub">your little bubble universe ✦</div></div><div class="date" id="today"></div></header>
-<section class="hero"><h1>Merhaba! Bubble günlüğüne hoş geldin 🫧</h1><p>Kendine ayırdığın küçük zamanları takip et.</p></section>
-<div class="quick">
-<button class="tile" data-go="skin"><b>♡</b><span>Skincare</span></button>
-<button class="tile" data-go="period"><b>✿</b><span>Regl</span></button>
-<button class="tile" data-go="meds"><b>＋</b><span>İlaçlar</span></button>
-<button class="tile" data-go="daily"><b>☼</b><span>Günlük</span></button>
+<header><div class="brand-wrap"><div class="brand">niloya<span class="brand-orb">✦</span></div><div class="sub">kendine ayırdığın alan.</div></div><div class="date"><span class="date-label">BUGÜN</span><strong id="today"></strong></div></header>
+<section class="hero"><div class="hero-copy"><span class="eyebrow">YOUR PERSONAL SPACE</span><h1>Küçük şeyler,<br><em>iyi hissettiren</em> rutinler.</h1><p>Bugün kendin için neler yapmak istersin?</p></div><div class="hero-art" aria-hidden="true"><span class="orb orb-a"></span><span class="orb orb-b"></span><span class="orb orb-c"></span><span class="orb-star">✧</span></div></section>
+<div class="section-kicker"><span>ALANLARIN</span><span class="kicker-line"></span></div><div class="quick">
+<button class="tile" data-go="skin"><span class="tile-icon">♡</span><span>Bakım</span><b>01</b></button>
+<button class="tile" data-go="period"><span class="tile-icon">◒</span><span>Döngüm</span><b>02</b></button>
+<button class="tile" data-go="meds"><span class="tile-icon">＋</span><span>İlaçlar</span><b>03</b></button>
+<button class="tile" data-go="daily"><span class="tile-icon">☼</span><span>Günlüğüm</span><b>04</b></button>
 </div>
 <nav>
 <button class="active" data-tab="home">Bugün</button><button data-tab="skin">Cilt bakımı</button><button data-tab="period">Regl günlüğü</button><button data-tab="meds">İlaçlar</button><button data-tab="daily">Aktivite & ruh hali</button><button data-tab="agenda">Ajanda</button><button data-tab="history">Kayıtlar</button>
